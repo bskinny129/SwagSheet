@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 242 33% 30%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 225 23% 39%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 220 16% 36%;
+    --muted-foreground: 220 16% 60%;
+    --accent: 37 67% 93%;
+    --accent-foreground: 242 33% 30%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 16% 60%;
+    --input: 220 16% 60%;
+    --ring: 242 33% 30%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 242 33% 30%;
+    --foreground: 37 67% 93%;
+    --card: 242 33% 30%;
+    --card-foreground: 37 67% 93%;
+    --popover: 242 33% 30%;
+    --popover-foreground: 37 67% 93%;
+    --primary: 220 16% 60%;
+    --primary-foreground: 242 33% 30%;
+    --secondary: 242 33% 30%;
+    --secondary-foreground: 220 16% 60%;
+    --muted: 242 33% 30%;
+    --muted-foreground: 220 16% 60%;
+    --accent: 242 33% 30%;
+    --accent-foreground: 220 16% 60%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 37 67% 93%;
+    --border: 220 16% 60%;
+    --input: 220 16% 60%;
+    --ring: 220 16% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Remove scrollbar from table */
+.table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.table-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
