@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabase';
 import { ColumnManager } from './ColumnManager';
 import { PaymentModal } from './PaymentModal';
 import { CSVUpload } from './CSVUpload';
+import { join } from 'path';
 
 interface CSVData {
   [key: string]: string;
@@ -20,21 +21,26 @@ export function CSVProcessor() {
   const [columns, setColumns] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
-  const [data, setData] = useState<CSVData[]>([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [showDropzone, setShowDropzone] = useState(true);
+  const [selectAll, setSelectAll] = useState(true);
+
 
   const { toast } = useToast();
 
+  const handleSelectAll = (checked: boolean) => {
+    setSelectAll(checked);
+    setSelectedColumns(checked ? columns : []);
+  };
 
-  // Previous functions remain the same until enhanceWithAI
   const handleFileAccepted = (file: File) => {
     setIsProcessing(false);
     setShowDropzone(false);
-    processCSV(file);
+    setSelectAll(true);
+    initialReadCSV(file);
   }
 
   const onColumnsReorder = (reorderedColumns: string[]) => {
@@ -42,13 +48,16 @@ export function CSVProcessor() {
   };
 
   const onColumnToggle = (column: string) => {
-    setSelectedColumns(prev =>
-      prev.includes(column) ? prev.filter(c => c !== column) : [...prev, column]
-    );
+    setSelectedColumns(prev => {
+      const newSelection = prev.includes(column)
+        ? prev.filter(c => c !== column)
+        : [...prev, column];
+      setSelectAll(newSelection.length === columns.length);
+      return newSelection;
+    });
   };
 
-
-  const processCSV = (file: File) => {
+  const initialReadCSV = (file: File) => {
     setFile(file);
     setIsProcessing(true);
     let rowCount = 0;
@@ -88,43 +97,75 @@ export function CSVProcessor() {
     });
   };
 
+
   const exportFilteredCSV = async () => {
     try {
       setIsExporting(true);
-      
-      const orderedColumns = columns.filter(col => selectedColumns.includes(col));
-      const filteredData = data
-        .slice(0, rowLimit)
-        .map((row) =>
-          orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {})
-        );
 
-      const csv = Papa.unparse(filteredData);
-      const filename = `export-${Date.now()}.csv`;
-      
-      const { data: storageData, error: storageError } = await supabase.storage
-        .from('csv-exports')
-        .upload(filename, csv, {
-          contentType: 'text/csv',
-          cacheControl: '3600',
+      if (!file) {
+        toast({
+          title: 'Error',
+          description: 'No file selected for export',
+          variant: 'destructive',
         });
+        return;
+      }
 
-      if (storageError) throw storageError;
+      const orderedColumns = columns.filter(col => selectedColumns.includes(col));
+      const csvRows: string[] = [];
+      let currentRowCount = 0;
 
-      const { data: urlData } = supabase.storage
-        .from('csv-exports')
-        .getPublicUrl(filename);
+      Papa.parse(file, {
+        step: (results, parser) => {
+          if (currentRowCount >= rowLimit) {
+            parser.abort(); // Stop parsing if rowLimit is reached
+            return;
+          }
+          const row = results.data;
+          const filteredRow = orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {});
+          csvRows.push(Papa.unparse([filteredRow], { header: false }));
+          currentRowCount++;
+        },
+        complete: () => {
+          const csv = [Papa.unparse([orderedColumns]), ...csvRows].join('\n');
+          const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
+          const filename = `export-${randomFourDigit}-${Date.now()}.csv`;
 
-      const link = document.createElement('a');
-      link.href = urlData.publicUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+          const csvBlob = new Blob([csv], { type: 'text/csv' });
 
-      toast({
-        title: 'Export successful',
-        description: 'Your CSV file has been processed and downloaded',
+          /*
+          BNOTE: CAN'T SEEM TO UPLOAD TO SUPABASE WITHOUT BEING LOGGED IN (ALTHOUGH CAN USE SERVICE ACCOUNT)
+          const { data: storageData, error: storageError } = await supabase.storage
+            .from('csv-exports')
+            .upload(filename, csvBlob);
+          console.log(storageData);
+          if (storageError) throw storageError;
+          */
+
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(csvBlob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          toast({
+            title: 'Export successful',
+            description: 'Your CSV file has been processed and downloaded',
+          });
+
+          setIsExporting(false);
+        },
+        header: true,
+        error: (error) => {
+          console.error('CSV parsing error:', error);
+          toast({
+            title: 'Error',
+            description: error.message,
+            variant: 'destructive',
+          });
+          setIsExporting(false);
+        },
       });
     } catch (error) {
       toast({
@@ -132,7 +173,6 @@ export function CSVProcessor() {
         description: error instanceof Error ? error.message : 'An error occurred during export',
         variant: 'destructive',
       });
-    } finally {
       setIsExporting(false);
     }
   };
@@ -166,6 +206,9 @@ export function CSVProcessor() {
         .from('csv-exports')
         .getPublicUrl(filename);
 
+      //link.href = `https://qdbvgmshiyfteyejqhoi.supabase.co/storage/v1/object/public/csv-exports/${filename}?download=swagsheet-export.csv`;
+
+      /*
       // Call the Edge Function
       const { data: processedData, error: functionError } = await supabase.functions
         .invoke('ProcessCSV', {
@@ -192,6 +235,7 @@ export function CSVProcessor() {
         },
         header: true,
       });
+      */
 
     } catch (error) {
       toast({
@@ -227,94 +271,110 @@ export function CSVProcessor() {
           isProcessing={isProcessing} 
         />
       ) : (
+
         <div className="bg-[#435585]/50 rounded-xl p-6 text-center">
-          <p className="text-[#818FB4] mb-4">
-            Filename: {file?.name}<br />
-            Total Rows: {rowCount}
-          </p>
-          <span
-            onClick={() => setShowDropzone(true)}
-            className="text-[#818FB4] hover:text-[#F5E8C7] transition-colors cursor-pointer"
-          >
-            Change CSV
-          </span>
+          { isProcessing ? (
+              <div className="flex items-center justify-center space-x-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Processing...</span>
+              </div>
+            ) : (
+              <>
+                <p className="text-[#818FB4] mb-4">
+                  Filename: {file?.name}<br />
+                  Total Rows: {rowCount}
+                </p>
+                <span
+                  onClick={() => setShowDropzone(true)}
+                  className="text-[#818FB4] hover:text-[#F5E8C7] transition-colors cursor-pointer"
+                >
+                  Change CSV
+                </span>
+              </>
+            )  
+          }
+          
         </div>
       )}
 
       {file && !isProcessing && !showDropzone && (
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-xl font-semibold text-[#F5E8C7] mb-4">Column select and order</h2>
-            <ColumnManager 
-              columns={columns}
-              selectedColumns={selectedColumns}
-              onColumnsReorder={onColumnsReorder}
-              onColumnToggle={onColumnToggle}
+        <>
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-xl font-semibold text-[#F5E8C7] mb-4">Column select and order</h2>
+              <div className="ml-0 lg:ml-24">
+                <ColumnManager 
+                  columns={columns}
+                  selectedColumns={selectedColumns}
+                  onColumnsReorder={onColumnsReorder}
+                  onColumnToggle={onColumnToggle}
+                  selectAll={selectAll}
+                  onSelectAll={handleSelectAll}
+                />
+              </div>
+            </div>
+          </div>
+
+        <div>
+          <h2 className="text-xl font-semibold text-[#F5E8C7] mb-4">Settings</h2>
+          <div className="flex items-center gap-2 max-w-xs ml-0 lg:ml-24">
+            <Label htmlFor="rowLimit" className="text-lg font-light text-[#F5E8C7] whitespace-nowrap">
+              Row Limit:
+            </Label>
+            <Input
+              id="rowLimit"
+              type="number"
+              value={rowLimit}
+              onChange={(e) => setRowLimit(Number(e.target.value))}
+              className="text-lg font-light bg-[#435585] border-[#818FB4] text-[#F5E8C7] w-32"
+              min="1"
+              max={rowCount}
             />
           </div>
         </div>
 
-      )}
+        <div className="flex justify-center gap-4">
+          <Button
+            onClick={handleEnhanceClick}
+            disabled={isEnhancing}
+            size="lg"
+            variant="secondary"
+            className="space-x-2 bg-[#435585] hover:bg-[#435585]/80 text-[#F5E8C7] disabled:opacity-50"
+          >
+            {isEnhancing ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Enhancing...</span>
+              </>
+            ) : (
+              <>
+                <Wand2 className="h-5 w-5" />
+                <span>Enhance with AI</span>
+              </>
+            )}
+          </Button>
 
-
-      <div>
-        <h2 className="text-xl font-semibold text-[#F5E8C7] mb-4">Settings</h2>
-        <div className="flex items-center gap-2 max-w-xs">
-          <Label htmlFor="rowLimit" className="text-[#F5E8C7] whitespace-nowrap">
-            Row Limit:
-          </Label>
-          <Input
-            id="rowLimit"
-            type="number"
-            value={rowLimit}
-            onChange={(e) => setRowLimit(Number(e.target.value))}
-            className="bg-[#435585] border-[#818FB4] text-[#F5E8C7]"
-            min="1"
-            max={rowCount}
-          />
+          <Button
+            onClick={exportFilteredCSV}
+            disabled={isExporting}
+            size="lg"
+            className="space-x-2 bg-[#818FB4] hover:bg-[#818FB4]/80 text-[#363062] disabled:opacity-50"
+          >
+            {isExporting ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Exporting...</span>
+              </>
+            ) : (
+              <>
+                <Download className="h-5 w-5" />
+                <span>Export CSV</span>
+              </>
+            )}
+          </Button>
         </div>
-      </div>
-
-      <div className="flex justify-center gap-4">
-        <Button
-          onClick={handleEnhanceClick}
-          disabled={isEnhancing}
-          size="lg"
-          variant="secondary"
-          className="space-x-2 bg-[#435585] hover:bg-[#435585]/80 text-[#F5E8C7] disabled:opacity-50"
-        >
-          {isEnhancing ? (
-            <>
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Enhancing...</span>
-            </>
-          ) : (
-            <>
-              <Wand2 className="h-5 w-5" />
-              <span>Enhance with AI</span>
-            </>
-          )}
-        </Button>
-
-        <Button
-          onClick={exportFilteredCSV}
-          disabled={isExporting}
-          size="lg"
-          className="space-x-2 bg-[#818FB4] hover:bg-[#818FB4]/80 text-[#363062] disabled:opacity-50"
-        >
-          {isExporting ? (
-            <>
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Exporting...</span>
-            </>
-          ) : (
-            <>
-              <Download className="h-5 w-5" />
-              <span>Export CSV</span>
-            </>
-          )}
-        </Button>
-      </div>
+        </>
+      )}
 
       <PaymentModal
         isOpen={showPaymentModal}

@@ -47,8 +47,8 @@ export function SortableColumn({
         </div>
       </TableCell>
       <TableCell className="text-[#F5E8C7] py-4 font-light">{column}</TableCell>
-      <TableCell className="w-24 py-4 !pr-24 text-right">
-        <div className="flex justify-end translate-x-[6px]">
+      <TableCell className="w-40 py-4 text-center">
+        <div className="flex items-center">
           <Checkbox
             checked={isSelected}
             onCheckedChange={onToggle}

@@ -21,12 +21,16 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { SortableColumn } from './SortableColumn';
+import { Checkbox } from '@/components/ui/checkbox';
+
 
 interface ColumnManagerProps {
   columns: string[];
   selectedColumns: string[];
   onColumnsReorder: (newColumns: string[]) => void;
   onColumnToggle: (column: string) => void;
+  selectAll: boolean;
+  onSelectAll: (checked: boolean) => void;
 }
 
 export function ColumnManager({
@@ -34,6 +38,8 @@ export function ColumnManager({
   selectedColumns,
   onColumnsReorder,
   onColumnToggle,
+  selectAll,
+  onSelectAll,
 }: ColumnManagerProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -67,8 +73,16 @@ export function ColumnManager({
             <TableRow className="text-lg">
               <TableHead className="w-16 py-6 font-semibold"></TableHead>
               <TableHead className="text-[#F5E8C7] py-6 font-semibold">Column Name</TableHead>
-              <TableHead className="w-24 text-center text-[#F5E8C7] py-6 pr-32 font-semibold">
-                Include
+              <TableHead className="w-40 text-[#F5E8C7] py-6 font-semibold">
+                <div className="flex items-center">
+                  <Checkbox
+                    checked={selectAll}
+                    onCheckedChange={(checked) => onSelectAll(checked as boolean)}
+                    className="h-5 w-5 border-[#818FB4] data-[state=checked]:bg-[#818FB4] data-[state=checked]:border-[#818FB4] mr-2"
+                  />
+                  Include
+                </div>
+                
               </TableHead>
             </TableRow>
           </TableHeader>
