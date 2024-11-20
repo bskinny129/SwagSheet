@@ -1,70 +1,149 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { cn } from "@/lib/utils"
+import { 
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+ } from '@/components/ui/navigation-menu';
 
-const navItems = [
-  { path: '/csv-reducer', label: 'CSV Reducer' },
-  { path: '/contact-names', label: 'AI Contact Names' },
-  { path: '/smart-merge', label: 'AI Smart Merge' },
-  { path: '/pricing', label: 'Pricing' },
+
+const freeTools: { title: string; href: string; description: string }[] = [
+  {
+    title: "CSV Reducer",
+    href: "/csv-reducer",
+    description:
+      "Remove and rearrange columns, plus limit the number of rows.",
+  }
 ];
+
+const aiTools: { title: string; href: string; description: string }[] = [
+  {
+    title: "AI Contact Names",
+    href: "/contact-names",
+    description:
+      "Normalize and standardize contact names using advanced AI PLACEHOLDER",
+  },
+  {
+    title: "AI Smart Merge",
+    href: "/smart-merge",
+    description:
+      "Intelligently merge CSV files with automatic duplicate detection PLACEHOLDER",
+  }
+];
+
+const ListItem = forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  const isActivePath = (path: string) => {
+    return location.pathname === path || (path === '/csv-reducer' && location.pathname === '/');
+  };
+
   return (
-    <nav className="z-50 bg-white backdrop-blur-sm">
+    <nav className="top-0 z-50 bg-white backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-[#0AEF8D]">
+              <span className="text-2xl font-bold text-primary-bright">
                 SwagSheet
               </span>
             </Link>
           </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:space-x-4">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`px-3 py-2 rounded-md text-center text-md font-light transition-colors relative ${
-                location.pathname === item.path
-                  ? 'font-medium'
-                  : 'text-black/80 hover:text-primary-dark'
-              }`}
-              style={{ width: item.label === 'AI Contact Names' ? '160px' : 
-                        item.label === 'Pricing' ? '100px' :
-                        '140px' }} 
-              >
-              {item.label}
-              {location.pathname === item.path && (
-                <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0AEF8D]"
-                  layoutId="navbar-indicator"
-                />
-              )}
-            </Link>
-          ))}
-          <Button
-            variant="default"
-            className="ml-4 bg-primary-bright text-primary-dark  hover:bg-primary-bright/70"
-          >
-            <Link to="/csv-reducer">
-            Get Started</Link>
-          </Button>
-        </div>
+          {/* Desktop Navigation */}
+          <div className="hidden z-50 md:flex md:items-center md:space-x-8 text-md font-light">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Free CSV Tools</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {freeTools.map((component) => (
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                        >
+                          {component.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>AI Powered Sheets</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                      {aiTools.map((component) => (
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                        >
+                          {component.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link
+                    to="/pricing"
+                    className="px-6 py-2 text-md font-light transition-colors relative rounded-sm hover:bg-accent"
+                  >
+                    Pricing
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            <Button
+              variant="default"
+              className="ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70"
+              asChild
+            >
+              <Link to="/csv-reducer">Get Started</Link>
+            </Button>
+          </div>
 
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white/80 hover:text-[#0AEF8D] focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-black/80 hover:text-primary-bright focus:outline-none"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -78,28 +157,66 @@ export function Navigation() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden"
+          className="md:hidden z-50"
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-[#004751] border-b border-[#0AEF8D]/20">
-            {navItems.map((item) => (
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
+            {/* Free Tools Section */}
+            <div className="px-3 py-2 text-sm font-semibold text-gray-400">
+              Free CSV Tools
+            </div>
+            {freeTools.map((item) => (
               <Link
-                key={item.path}
-                to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  location.pathname === item.path
-                    ? 'text-[#0AEF8D] bg-[#0AEF8D]/10'
-                    : 'text-white/80 hover:text-[#0AEF8D] hover:bg-[#0AEF8D]/10'
+                key={item.href}
+                to={item.href}
+                className={`block px-6 py-2 rounded-md text-base ${
+                  isActivePath(item.href)
+                    ? 'text-black/80 font-medium bg-primary-bright/10'
+                    : 'text-black/80 hover:bg-primary-bright/10'
                 }`}
                 onClick={() => setIsOpen(false)}
               >
-                {item.label}
+                {item.title}
               </Link>
             ))}
+
+            {/* AI Tools Section */}
+            <div className="px-3 py-2 text-sm font-semibold text-gray-400 mt-4">
+              AI Powered Sheets
+            </div>
+            {aiTools.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={`block px-6 py-2 rounded-md text-base ${
+                  isActivePath(item.href)
+                    ? 'text-black/80 font-medium bg-primary-bright/10'
+                    : 'text-black/80 hover:bg-primary-bright/10'
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.title}
+              </Link>
+            ))}
+
+            <Link
+              to="/pricing"
+              className={`block px-3 py-2 rounded-md text-base ${
+                location.pathname === '/pricing'
+                  ? 'text-black/80 font-medium bg-primary-bright/10'
+                  : 'text-black/80 hover:bg-primary-bright/10'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              Pricing
+            </Link>
+
             <Button
               variant="default"
-              className="w-full mt-4 bg-[#0AEF8D] text-[#004751] hover:bg-[#0AEF8D]/90"
+              className="w-full mt-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70"
+              onClick={() => setIsOpen(false)}
+              asChild
             >
-              Get Started
+              <Link to="/csv-reducer">Get Started</Link>
             </Button>
           </div>
         </motion.div>

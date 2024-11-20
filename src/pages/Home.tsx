@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, FileSpreadsheet, Users, GitBranch } from 'lucide-react';
+//import { ArrowRight, FileSpreadsheet, Users, GitBranch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedIcon } from '@/components/ui/animated-icon';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ const features = [
     icon: <AnimatedIcon />,
     title: 'CSV Reducer',
     description:
-      'Optimize and compress your CSV files while maintaining data integrity.',
+      'Optimize your CSV files by removing and rearranging columns, plus limit the number of rows',
     link: '/csv-reducer'
   },
   {
@@ -30,10 +30,10 @@ const features = [
 
 export function Home() {
   return (
-    <div className="relative">
+    <div className="relative z-0">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div className="relative z-10">
+        <div className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -74,10 +74,6 @@ export function Home() {
           </div>
         </div>
 
-        {/* Background decoration */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-30">
-          <div className="absolute inset-0 rotate-45 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full blur-3xl" />
-        </div>
       </div>
 
       {/* Features Section */}
