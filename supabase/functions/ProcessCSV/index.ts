@@ -1,6 +1,5 @@
-import { serve } from 'https://deno.fresh.dev/std@v1/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.8';
-import OpenAI from 'https://esm.sh/openai@4.28.4';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+import OpenAI from 'https://deno.land/x/openai@v4.24.0/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,7 +10,7 @@ interface RequestBody {
   fileUrl: string;
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });

@@ -179,33 +179,60 @@ export function CSVProcessor() {
   const enhanceWithAI = async () => {
     try {
       setIsEnhancing(true);
-      
-      // First export the current CSV to storage
-      const orderedColumns = columns.filter(col => selectedColumns.includes(col));
-      const filteredData = data
-        .slice(0, rowLimit)
-        .map((row) =>
-          orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {})
-        );
 
-      const csv = Papa.unparse(filteredData);
-      const filename = `pre-enhance-${Date.now()}.csv`;
-      
-      // Upload original CSV
-      const { data: storageData, error: storageError } = await supabase.storage
-        .from('csv-exports')
-        .upload(filename, csv, {
-          contentType: 'text/csv',
-          cacheControl: '3600',
+      if (!file) {
+        toast({
+          title: 'Error',
+          description: 'No file selected for export',
+          variant: 'destructive',
         });
+        return;
+      }
 
-      if (storageError) throw storageError;
+      const orderedColumns = columns.filter(col => selectedColumns.includes(col));
+      const csvRows: string[] = [];
+      let currentRowCount = 0;
 
-      const { data: urlData } = supabase.storage
-        .from('csv-exports')
-        .getPublicUrl(filename);
+      Papa.parse(file, {
+        step: (results, parser) => {
+          if (currentRowCount >= rowLimit) {
+            parser.abort(); // Stop parsing if rowLimit is reached
+            return;
+          }
+          const row = results.data;
+          const filteredRow = orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {});
+          csvRows.push(Papa.unparse([filteredRow], { header: false }));
+          currentRowCount++;
+        },
+        complete: async () => {
+          const csv = [Papa.unparse([orderedColumns]), ...csvRows].join('\n');
+          const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
+          const filename = `export-${randomFourDigit}-${Date.now()}.csv`;
 
-      //link.href = `https://qdbvgmshiyfteyejqhoi.supabase.co/storage/v1/object/public/csv-exports/${filename}?download=swagsheet-export.csv`;
+          const csvBlob = new Blob([csv], { type: 'text/csv' });
+
+          // Upload original CSV
+          const { data: storageData, error: storageError } = await supabase.storage
+            .from('csv-exports')
+            .upload(filename, csvBlob);
+
+          //link.href = `https://qdbvgmshiyfteyejqhoi.supabase.co/storage/v1/object/public/csv-exports/${filename}?download=swagsheet-export.csv`;
+
+
+        if (storageError) throw storageError;
+        },
+        header: true,
+        error: (error) => {
+          console.error('CSV parsing error:', error);
+          toast({
+            title: 'Error',
+            description: error.message,
+            variant: 'destructive',
+          });
+          setIsProcessing(false);
+        },
+    });
+      
 
       /*
       // Call the Edge Function
@@ -248,7 +275,8 @@ export function CSVProcessor() {
   };
 
   const handleEnhanceClick = () => {
-    setShowPaymentModal(true);
+    //setShowPaymentModal(true);
+    handlePaymentSuccess();
   };
 
   const handlePaymentSuccess = () => {

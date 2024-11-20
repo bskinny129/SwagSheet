@@ -28,7 +28,7 @@ const aiTools: { title: string; href: string; description: string }[] = [
     title: "AI Contact Names",
     href: "/contact-names",
     description:
-      "Normalize and standardize contact names using advanced AI PLACEHOLDER",
+      "Standardize contact names using AI PLACEHOLDER",
   },
   {
     title: "AI Smart Merge",
@@ -72,7 +72,7 @@ export function Navigation() {
   };
 
   return (
-    <nav className="top-0 z-50 bg-white backdrop-blur-sm border-b border-gray-100">
+    <nav className="top-0 z-50 bg-white backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
