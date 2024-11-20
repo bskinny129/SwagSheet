@@ -62,7 +62,7 @@ export function ColumnManager({
   };
 
   return (
-    <div className="rounded-md border border-[#818FB4]/20 bg-[#435585]/50 overflow-hidden">
+    <div className="rounded-md border border-primary-very-dark bg-primary-very-light-purple/10 overflow-hidden">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -70,15 +70,15 @@ export function ColumnManager({
       >
         <Table className="font-normal w-full table-fixed">
           <TableHeader>
-            <TableRow className="text-lg">
+            <TableRow className="text-lg bg-primary-very-light-purple/30 hover:bg-primary-very-light-purple/30 border-primary-very-dark">
               <TableHead className="w-16 py-6 font-semibold"></TableHead>
-              <TableHead className="text-[#F5E8C7] py-6 font-semibold">Column Name</TableHead>
-              <TableHead className="w-40 text-[#F5E8C7] py-6 font-semibold">
+              <TableHead className="text-gray-600 py-6 font-semibold">Column Name</TableHead>
+              <TableHead className="w-40 text-gray-600 py-6 font-semibold">
                 <div className="flex items-center">
                   <Checkbox
                     checked={selectAll}
                     onCheckedChange={(checked) => onSelectAll(checked as boolean)}
-                    className="h-5 w-5 border-[#818FB4] data-[state=checked]:bg-[#818FB4] data-[state=checked]:border-[#818FB4] mr-2"
+                    className="h-5 w-5 bg-white border-primary-bright-purple/30 data-[state=checked]:bg-primary-very-light-purple data-[state=checked]:border-primary-bright-purple/30 mr-2"
                   />
                   Include
                 </div>

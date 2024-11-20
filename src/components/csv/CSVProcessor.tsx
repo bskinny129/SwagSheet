@@ -9,7 +9,6 @@ import { supabase } from '@/lib/supabase';
 import { ColumnManager } from './ColumnManager';
 import { PaymentModal } from './PaymentModal';
 import { CSVUpload } from './CSVUpload';
-import { join } from 'path';
 
 interface CSVData {
   [key: string]: string;
@@ -260,11 +259,6 @@ export function CSVProcessor() {
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-8">
 
-      <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#F5E8C7] mb-2">CSV Processor</h1>
-        <p className="text-[#818FB4]">Upload, process, and export your CSV files</p>
-      </div>
-
       {showDropzone ? (
         <CSVUpload 
           onFileAccepted={handleFileAccepted} 
@@ -272,7 +266,7 @@ export function CSVProcessor() {
         />
       ) : (
 
-        <div className="bg-[#435585]/50 rounded-xl p-6 text-center">
+        <div className="bg-primary-very-light-purple/10 rounded-xl p-6 text-center">
           { isProcessing ? (
               <div className="flex items-center justify-center space-x-2">
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -280,13 +274,13 @@ export function CSVProcessor() {
               </div>
             ) : (
               <>
-                <p className="text-[#818FB4] mb-4">
+                <p className="text-gray-600 mb-4">
                   Filename: {file?.name}<br />
                   Total Rows: {rowCount}
                 </p>
                 <span
                   onClick={() => setShowDropzone(true)}
-                  className="text-[#818FB4] hover:text-[#F5E8C7] transition-colors cursor-pointer"
+                  className="text-gray-600 hover:text-black transition-colors cursor-pointer"
                 >
                   Change CSV
                 </span>
@@ -301,7 +295,7 @@ export function CSVProcessor() {
         <>
           <div className="space-y-8">
             <div>
-              <h2 className="text-xl font-semibold text-[#F5E8C7] mb-4">Column select and order</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Column select and order</h2>
               <div className="ml-0 lg:ml-24">
                 <ColumnManager 
                   columns={columns}
@@ -316,17 +310,20 @@ export function CSVProcessor() {
           </div>
 
         <div>
-          <h2 className="text-xl font-semibold text-[#F5E8C7] mb-4">Settings</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Settings</h2>
           <div className="flex items-center gap-2 max-w-xs ml-0 lg:ml-24">
-            <Label htmlFor="rowLimit" className="text-lg font-light text-[#F5E8C7] whitespace-nowrap">
+            <Label htmlFor="rowLimit" className="text-lg font-light text-gray-600 whitespace-nowrap">
               Row Limit:
             </Label>
             <Input
               id="rowLimit"
               type="number"
               value={rowLimit}
-              onChange={(e) => setRowLimit(Number(e.target.value))}
-              className="text-lg font-light bg-[#435585] border-[#818FB4] text-[#F5E8C7] w-32"
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setRowLimit(value > rowCount ? rowCount : value);
+              }}
+              className="text-lg font-light text-gray-600 w-32"
               min="1"
               max={rowCount}
             />

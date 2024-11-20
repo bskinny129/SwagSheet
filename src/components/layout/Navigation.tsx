@@ -33,12 +33,15 @@ export function Navigation() {
             <Link
               key={item.path}
               to={item.path}
-              className={`px-3 py-2 rounded-md text-lg font-light transition-colors relative ${
+              className={`px-3 py-2 rounded-md text-center text-md font-light transition-colors relative ${
                 location.pathname === item.path
                   ? 'font-medium'
-                  : 'text-black/80 hover:text-[#0AEF8D]'
+                  : 'text-black/80 hover:text-primary-dark'
               }`}
-            >
+              style={{ width: item.label === 'AI Contact Names' ? '160px' : 
+                        item.label === 'Pricing' ? '100px' :
+                        '140px' }} 
+              >
               {item.label}
               {location.pathname === item.path && (
                 <motion.div
@@ -50,9 +53,10 @@ export function Navigation() {
           ))}
           <Button
             variant="default"
-            className="ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/90"
+            className="ml-4 bg-primary-bright text-primary-dark  hover:bg-primary-bright/70"
           >
-            Get Started
+            <Link to="/csv-reducer">
+            Get Started</Link>
           </Button>
         </div>
 

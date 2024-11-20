@@ -16,7 +16,12 @@ export default {
       },
       colors: {
         'primary-bright': '#0AEF8D', 
-        'primary-dark': '#004751',  
+        'primary-dark': '#004751', 
+        'primary-very-dark': '#004751',
+        'primary-bright-purple': '#9540FF',
+        'primary-light-green': '#D3FDB5',
+        'primary-very-light-green': '#E9FED7',
+        'primary-very-light-purple': '#C7BCF4',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

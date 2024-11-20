@@ -1,26 +1,30 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, FileSpreadsheet, Users, GitBranch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { AnimatedIcon } from '@/components/ui/animated-icon';
 import { Link } from 'react-router-dom';
 
 const features = [
   {
-    icon: FileSpreadsheet,
+    icon: <AnimatedIcon />,
     title: 'CSV Reducer',
     description:
       'Optimize and compress your CSV files while maintaining data integrity.',
+    link: '/csv-reducer'
   },
   {
-    icon: Users,
+    icon: <></>,
     title: 'AI Contact Names',
     description:
       'Normalize and standardize contact names using advanced AI algorithms.',
+      link: '/contact-names'
   },
   {
-    icon: GitBranch,
+    icon: <></>,
     title: 'AI Smart Merge',
     description:
       'Intelligently merge CSV files with automatic duplicate detection.',
+      link: '/smart-merge'
   },
 ];
 
@@ -60,20 +64,11 @@ export function Home() {
               <Button
                 asChild
                 size="lg"
-                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90"
+                className="ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/80"
               >
                 <Link to="/csv-reducer">
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  Get Started for Free
                 </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-purple-600 text-purple-600 hover:bg-purple-50"
-              >
-                <Link to="/pricing">View Pricing</Link>
               </Button>
             </motion.div>
           </div>
@@ -96,14 +91,18 @@ export function Home() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl transform group-hover:scale-105 transition-transform duration-300 -z-10" />
-              <div className="relative p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 h-full">
-                <feature.icon className="h-12 w-12 text-purple-600 mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </div>
+              <Link to={feature.link} className="block h-full">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl transform group-hover:scale-105 transition-transform duration-300 -z-10" />
+                <div className="relative p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 h-full">
+                  <div className="flex justify-center mt-4 mb-8">
+                    { feature.icon }
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>

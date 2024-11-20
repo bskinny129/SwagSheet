@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useLayoutEffect } from "react";
 import { Toaster } from '@/components/ui/toaster';
 import { Navigation } from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
@@ -12,6 +13,17 @@ import { supabase } from '@/lib/supabase';
 
 
 function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+function AppContent() {
+
+  const location = useLocation();
+
     /*
   const [session, setSession] = useState<Session | null>({} as Session);
 
@@ -29,8 +41,11 @@ function App() {
   }, []);
   */
 
+  useLayoutEffect(() => {
+      document.documentElement.scrollTo({ top:0, left:0, behavior: "instant" });
+  }, [location.pathname]);
+
   return (
-    <Router>
       <div className="min-h-screen bg-white">
         <Navigation />
         <main>
@@ -46,7 +61,6 @@ function App() {
         <Footer />
         <Toaster />
       </div>
-    </Router>
   );
 }
 

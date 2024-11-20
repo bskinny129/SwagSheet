@@ -4,26 +4,23 @@ import { Button } from '@/components/ui/button';
 
 const plans = [
   {
-    name: 'Free',
-    price: '$0',
+    name: 'No account necessary',
+    price: 'Free',
     description: 'Perfect for trying out SwagSheet',
     features: [
-      'Process up to 1,000 rows',
-      'Basic CSV reduction',
-      'Export to CSV',
-      'Community support',
+      'Process up to 10,000 rows',
+      'AI-powered intelligence on up to 10 rows',
+      'Download CSV',
     ],
   },
   {
-    name: 'Pro',
-    price: '$19',
+    name: 'Pay as You Go',
+    price: '$0',
     description: 'For professionals and small teams',
     features: [
-      'Process up to 100,000 rows',
-      'Advanced CSV reduction',
-      'AI-powered name normalization',
-      'Priority email support',
-      'API access',
+      'Process up to 1,000,000 rows',
+      'AI-powered intelligence for just half a cent per row',
+      'Download CSV or save to cloud',
     ],
   },
   {
@@ -32,11 +29,8 @@ const plans = [
     description: 'For large organizations',
     features: [
       'Unlimited row processing',
-      'Custom AI models',
-      'Advanced security features',
-      'Dedicated support',
+      'Custom AI models + bring your own OpenAI keys',
       'Custom integrations',
-      'SLA guarantee',
     ],
   },
 ];
@@ -59,15 +53,15 @@ export function Pricing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className={`relative rounded-2xl bg-white p-8 shadow-lg border ${
-              plan.name === 'Pro'
-                ? 'border-purple-600 ring-2 ring-purple-600 ring-opacity-50'
+              plan.name === 'Pay as You Go'
+                ? 'border-primary-bright ring-2 ring-primary-bright ring-opacity-50'
                 : 'border-gray-200'
             }`}
           >
-            {plan.name === 'Pro' && (
+            {plan.name === 'Pay as You Go' && (
               <div className="absolute top-0 right-6 transform -translate-y-1/2">
-                <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-600 to-blue-600 text-white">
-                  Popular
+                <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-primary-bright to-primary-dark text-white">
+                  Most Popular
                 </span>
               </div>
             )}
@@ -77,7 +71,7 @@ export function Pricing() {
                 <span className="text-4xl font-bold text-gray-900">
                   {plan.price}
                 </span>
-                {plan.price !== 'Custom' && (
+                {plan.name === 'Pay as You Go' && (
                   <span className="text-gray-600">/month</span>
                 )}
               </div>
@@ -95,11 +89,11 @@ export function Pricing() {
 
             <Button
               className={`w-full ${
-                plan.name === 'Pro'
-                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90'
+                plan.name === 'Pay as You Go'
+                  ? 'bg-primary-bright text-primary-dark hover:bg-primary-bright/70'
                   : ''
               }`}
-              variant={plan.name === 'Pro' ? 'default' : 'outline'}
+              variant={plan.name === 'Pay as You Go' ? 'default' : 'outline'}
             >
               {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
             </Button>

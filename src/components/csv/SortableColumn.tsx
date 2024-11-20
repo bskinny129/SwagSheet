@@ -35,25 +35,25 @@ export function SortableColumn({
     <TableRow
       ref={setNodeRef}
       style={style}
-      className="group hover:bg-[#363062]/50 text-lg"
+      className="group hover:bg-primary-very-light-purple/20 border-primary-bright-purple/20 text-lg"
       {...attributes}
     >
       <TableCell className="w-24 py-4">
        <div className="flex justify-center">
           <GripHorizontal
-            className="h-6 w-6 text-[#818FB4] cursor-move"
+            className="h-6 w-6 text-primary-very-dark cursor-move"
             {...listeners}
           />
         </div>
       </TableCell>
-      <TableCell className="text-[#F5E8C7] py-4 font-light">{column}</TableCell>
+      <TableCell className="text-gray-600 py-4 font-light">{column}</TableCell>
       <TableCell className="w-40 py-4 text-center">
         <div className="flex items-center">
           <Checkbox
             checked={isSelected}
             onCheckedChange={onToggle}
             onClick={(e) => e.stopPropagation()}
-            className="h-5 w-5 border-[#818FB4] data-[state=checked]:bg-[#818FB4] data-[state=checked]:border-[#818FB4]"
+            className="h-5 w-5 bg-white border-primary-bright-purple/30 data-[state=checked]:bg-primary-very-light-purple data-[state=checked]:border-primary-bright-purple/30"
           />
         </div>
       </TableCell>
