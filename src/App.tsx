@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useEffect, useState } from "react";
 import { Toaster } from '@/components/ui/toaster';
 import { Navigation } from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
@@ -10,6 +10,8 @@ import { SmartMerge } from '@/pages/SmartMerge';
 import { Pricing } from '@/pages/Pricing';
 import { Privacy } from '@/pages/Privacy';
 import { supabase } from '@/lib/supabase';
+import { Session } from '@supabase/supabase-js';
+import { MyAccount } from '@/pages/MyAccount';
 
 
 function App() {
@@ -23,8 +25,7 @@ function App() {
 function AppContent() {
 
   const location = useLocation();
-
-    /*
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [session, setSession] = useState<Session | null>({} as Session);
 
   useEffect(() => {
@@ -39,18 +40,23 @@ function AppContent() {
      });
      return () => subscription.unsubscribe();
   }, []);
-  */
+
 
   useLayoutEffect(() => {
       document.documentElement.scrollTo({ top:0, left:0, behavior: "instant" });
   }, [location.pathname]);
 
+
+
   return (
       <div className="min-h-screen bg-white">
-        <Navigation />
+
+        <Navigation session={session} />
+
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/my-account" element={<MyAccount />} />
             <Route path="/csv-reducer" element={<CSVReducer />} />
             <Route path="/contact-names" element={<ContactNames />} />
             <Route path="/smart-merge" element={<SmartMerge />} />
@@ -58,6 +64,7 @@ function AppContent() {
             <Route path="/privacy" element={<Privacy />} />
           </Routes>
         </main>
+
         <Footer />
         <Toaster />
       </div>

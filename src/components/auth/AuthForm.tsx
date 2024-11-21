@@ -4,12 +4,10 @@ import { supabase } from '@/lib/supabase';
 
 export function AuthForm() {
   return (
-    <div className="w-full max-w-md mx-auto space-y-8">
+
+    <div className="w-full max-w-md mx-auto space-y-8 py-6">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-          CSV Processor
-        </h2>
-        <p className="mt-2 text-sm text-center text-muted-foreground">
+        <p className="text-sm text-center text-muted-foreground">
           Sign in or create an account to process your CSV files
         </p>
       </div>

@@ -12,6 +12,16 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
  } from '@/components/ui/navigation-menu';
+ import { Session } from '@supabase/supabase-js';
+ import { AuthForm } from '@/components/auth/AuthForm';
+ import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 const freeTools: { title: string; href: string; description: string }[] = [
@@ -48,7 +58,7 @@ const ListItem = forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent",
+            "block select-none space-y-1 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/30 focus:bg-accent/30",
             className
           )}
           {...props}
@@ -63,7 +73,7 @@ const ListItem = forwardRef<
   )
 })
 
-export function Navigation() {
+export function Navigation({ session, onSignInClick }: { session: Session | null, onSignInClick: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -122,7 +132,7 @@ export function Navigation() {
                 <NavigationMenuItem>
                   <Link
                     to="/pricing"
-                    className="px-6 py-2 text-md font-light transition-colors relative rounded-sm hover:bg-accent"
+                    className="px-6 py-2 text-md font-light transition-colors relative rounded-sm hover:bg-accent/30"
                   >
                     Pricing
                   </Link>
@@ -130,13 +140,28 @@ export function Navigation() {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Button
-              variant="default"
-              className="ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70"
-              asChild
-            >
-              <Link to="/csv-reducer">Get Started</Link>
-            </Button>
+            {session ? (
+              <Button
+                variant="default"
+                className="ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70"
+                asChild
+              >
+                <Link to="/my-account">My Account</Link>
+              </Button>
+            ) : (
+              <Dialog>
+
+                <DialogTrigger>
+                    <Button className="block ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70">Sign In</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <AuthForm />
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+              
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -210,14 +235,28 @@ export function Navigation() {
               Pricing
             </Link>
 
-            <Button
-              variant="default"
-              className="w-full mt-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70"
-              onClick={() => setIsOpen(false)}
-              asChild
-            >
-              <Link to="/csv-reducer">Get Started</Link>
-            </Button>
+            {session ? (
+              <Link
+                to="/my-account"
+                className="block px-3 py-2 rounded-md text-base text-black/80 hover:bg-primary-bright/10"
+                onClick={() => setIsOpen(false)}
+              >
+                My Account
+              </Link>
+            ) : (
+              <Dialog>
+                <DialogTrigger 
+                  className="block text-left w-full px-3 py-2 rounded-md text-base text-black/80 hover:bg-primary-bright/10">
+                    Sign In
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <AuthForm />
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+              
+            )}
           </div>
         </motion.div>
       )}
