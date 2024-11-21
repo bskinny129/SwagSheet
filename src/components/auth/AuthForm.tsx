@@ -8,7 +8,7 @@ export function AuthForm() {
     <div className="w-full max-w-md mx-auto space-y-8 py-6">
       <div>
         <p className="text-sm text-center text-muted-foreground">
-          Sign in or create an account to process your CSV files
+          Sign in or create an account
         </p>
       </div>
 

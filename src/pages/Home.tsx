@@ -9,22 +9,25 @@ const features = [
     icon: <AnimatedIcon />,
     title: 'CSV Reducer',
     description:
-      'Optimize your CSV files by removing and rearranging columns, plus limit the number of rows',
-    link: '/csv-reducer'
+      'Optimize your CSV files by removing and rearranging columns, plus limit the number of rows.',
+    link: '/csv-reducer',
+    price: 'Free'
   },
   {
     icon: <></>,
     title: 'AI Contact Names',
     description:
       'Normalize and standardize contact names using advanced AI algorithms.',
-      link: '/contact-names'
+    link: '/contact-names',
+    price: '½ cent per row'
   },
   {
     icon: <></>,
     title: 'AI Smart Merge',
     description:
       'Intelligently merge CSV files with automatic duplicate detection.',
-      link: '/smart-merge'
+    link: '/smart-merge',
+    price: '¼ cent per row'
   },
 ];
 
@@ -41,8 +44,8 @@ export function Home() {
               transition={{ duration: 0.5 }}
               className="text-4xl sm:text-6xl font-bold text-gray-900 mb-6"
             >
-              Transform Your CSV Data with{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              Improve your Sheets Data with{' '}<br />
+              <span className="bg-gradient-to-r from-primary-bright-purple to-primary-bright-purple/80 bg-clip-text text-transparent">
                 AI-Powered Tools
               </span>
             </motion.h1>
@@ -52,8 +55,8 @@ export function Home() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
             >
-              Powerful CSV processing tools that help you reduce, normalize, and
-              merge your data with unprecedented accuracy.
+              No monthly subscription! Free CSV processing tools to reduce and
+              merge your data. Or pay a fraction of a cent to improve your data with AI.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -78,7 +81,7 @@ export function Home() {
 
       {/* Features Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="h-[403.2px] grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -88,8 +91,7 @@ export function Home() {
               className="relative group"
             >
               <Link to={feature.link} className="block h-full">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl transform group-hover:scale-105 transition-transform duration-300 -z-10" />
-                <div className="relative p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 h-full">
+                <div className="flex flex-col relative p-6 rounded-2xl border border-primary-bright/30 h-full transform group-hover:scale-105 group-hover:border-2 transition-transform duration-300">
                   <div className="flex justify-center mt-4 mb-8">
                     { feature.icon }
                   </div>
@@ -97,6 +99,11 @@ export function Home() {
                     {feature.title}
                   </h3>
                   <p className="text-gray-600">{feature.description}</p>
+                  <div className="mt-auto text-right">
+                    <span className="text-lg font-bold text-gray-400">
+                      {feature.price}
+                    </span>
+                  </div>
                 </div>
               </Link>
             </motion.div>

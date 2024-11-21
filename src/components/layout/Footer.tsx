@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4 md:col-span-2">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-primary-bright to-primary-dark bg-clip-text text-transparent">
-              SwagSheet
+              <img src="/src/assets/SwagSheet200.jpg" alt="SwagSheet Logo" className="h-12 w-auto" />
             </h3>
             <p className="text-gray-500 text-sm">
               Modern CSV processing tools for an AI world

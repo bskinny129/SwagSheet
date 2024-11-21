@@ -73,7 +73,7 @@ const ListItem = forwardRef<
   )
 })
 
-export function Navigation({ session, onSignInClick }: { session: Session | null, onSignInClick: () => void }) {
+export function Navigation({ session }: { session: Session | null }) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -87,9 +87,7 @@ export function Navigation({ session, onSignInClick }: { session: Session | null
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-primary-bright">
-                SwagSheet
-              </span>
+              <img src="/src/assets/SwagSheet200.jpg" alt="SwagSheet Logo" className="h-12 w-auto" />
             </Link>
           </div>
 

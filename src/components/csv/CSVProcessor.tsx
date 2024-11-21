@@ -206,15 +206,17 @@ export function CSVProcessor() {
         },
         complete: async () => {
           const csv = [Papa.unparse([orderedColumns]), ...csvRows].join('\n');
-          const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
-          const filename = `export-${randomFourDigit}-${Date.now()}.csv`;
+          //const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
+          //const filename = `export-${randomFourDigit}-${Date.now()}.csv`;
 
           const csvBlob = new Blob([csv], { type: 'text/csv' });
-
+          const base64Csv = await convertBlobToBase64(csvBlob);
+        
           // Call the Edge Function
           const { data: processedData, error: functionError } = await supabase.functions
             .invoke('ProcessCSV', {
-              body: { csvData: csvBlob },
+              body: { csvData: base64Csv }, // Ensure the body is a JSON string
+              //body: { foo: 'bar' },
             });
 
           if (functionError) throw functionError;
@@ -277,6 +279,19 @@ export function CSVProcessor() {
     } finally {
       setIsEnhancing(false);
     }
+  };
+
+
+  const convertBlobToBase64 = (blob: Blob): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = reader.result as string;
+        resolve(base64data.split(',')[1]); // Remove the data URL prefix
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   };
 
   const handleEnhanceClick = () => {

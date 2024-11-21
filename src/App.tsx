@@ -8,6 +8,7 @@ import { CSVReducer } from '@/pages/CSVReducer';
 import { ContactNames } from '@/pages/ContactNames';
 import { SmartMerge } from '@/pages/SmartMerge';
 import { Pricing } from '@/pages/Pricing';
+import { About } from '@/pages/About';
 import { Privacy } from '@/pages/Privacy';
 import { supabase } from '@/lib/supabase';
 import { Session } from '@supabase/supabase-js';
@@ -56,6 +57,7 @@ function AppContent() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/my-account" element={<MyAccount />} />
             <Route path="/csv-reducer" element={<CSVReducer />} />
             <Route path="/contact-names" element={<ContactNames />} />
