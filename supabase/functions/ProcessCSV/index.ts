@@ -1,4 +1,4 @@
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import OpenAI from 'https://deno.land/x/openai@v4.24.0/mod.ts';
 
 const corsHeaders = {
@@ -7,8 +7,10 @@ const corsHeaders = {
 };
 
 interface RequestBody {
-  fileUrl: string;
+  csvData: Blob;
 }
+
+const MB = 1024 * 1024
 
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
@@ -26,19 +28,23 @@ Deno.serve(async (req) => {
       apiKey: Deno.env.get('OPENAI_API_KEY'),
     });
 
-    const { fileUrl } = await req.json() as RequestBody;
+    const { csvData } = await req.json() as RequestBody;
+    const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
 
-    // Download the CSV from Supabase Storage
-    const { data: fileData, error: downloadError } = await supabaseClient
+    const rawFilename = `raw-${randomFourDigit}-${Date.now()}.csv`;
+
+    // Upload the processed CSV back to Supabase Storage
+    const { data: rawUploadData, error: rawUploadError } = supabaseClient
       .storage
       .from('csv-exports')
-      .download(fileUrl.split('/').pop()!);
+      .upload(rawFilename, csvData, {
+        contentType: 'text/csv',
+        cacheControl: '3600',
+      });
 
-    if (downloadError) {
-      throw new Error(`Error downloading file: ${downloadError.message}`);
+    if (rawUploadError) {
+      throw new Error(`Error uploading raw file: ${rawUploadError.message}`);
     }
-
-    const csvContent = await fileData.text();
 
     // Process with OpenAI
     const completion = await openai.chat.completions.create({
@@ -52,17 +58,14 @@ Deno.serve(async (req) => {
         },
         {
           role: 'user',
-          content: csvContent
+          content: csvData
         }
       ],
       temperature: 0.3,
     });
 
     const processedCsv = completion.choices[0].message.content;
-
-    // Generate a unique filename for the processed CSV
-    const timestamp = new Date().getTime();
-    const processedFilename = `processed-${timestamp}.csv`;
+    const processedFilename = `processed-${randomFourDigit}-${Date.now()}.csv`;
 
     // Upload the processed CSV back to Supabase Storage
     const { data: uploadData, error: uploadError } = await supabaseClient
@@ -77,16 +80,11 @@ Deno.serve(async (req) => {
       throw new Error(`Error uploading processed file: ${uploadError.message}`);
     }
 
-    // Get the public URL of the processed file
-    const { data: urlData } = supabaseClient
-      .storage
-      .from('csv-exports')
-      .getPublicUrl(processedFilename);
 
     return new Response(
       JSON.stringify({
         success: true,
-        url: urlData.publicUrl,
+        filename: processedFilename,
       }),
       {
         headers: {

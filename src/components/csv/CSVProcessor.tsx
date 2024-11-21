@@ -211,15 +211,26 @@ export function CSVProcessor() {
 
           const csvBlob = new Blob([csv], { type: 'text/csv' });
 
+          // Call the Edge Function
+          const { data: processedData, error: functionError } = await supabase.functions
+            .invoke('ProcessCSV', {
+              body: { csvData: csvBlob },
+            });
+
+          if (functionError) throw functionError;
+
           // Upload original CSV
+          /*
           const { data: storageData, error: storageError } = await supabase.storage
             .from('csv-exports')
             .upload(filename, csvBlob);
 
+          if (storageError) throw storageError;
+
           //link.href = `https://qdbvgmshiyfteyejqhoi.supabase.co/storage/v1/object/public/csv-exports/${filename}?download=swagsheet-export.csv`;
+          */
 
-
-        if (storageError) throw storageError;
+        
         },
         header: true,
         error: (error) => {
@@ -235,13 +246,7 @@ export function CSVProcessor() {
       
 
       /*
-      // Call the Edge Function
-      const { data: processedData, error: functionError } = await supabase.functions
-        .invoke('ProcessCSV', {
-          body: { fileUrl: urlData.publicUrl },
-        });
-
-      if (functionError) throw functionError;
+      
 
       // Download the enhanced CSV
       const response = await fetch(processedData.url);
