@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 //import { ArrowRight, FileSpreadsheet, Users, GitBranch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AnimatedIcon } from '@/components/ui/animated-icon';
+import { AnimatedIcon } from '@/components/animated-icons/AnimatedIcon';
 import { Link } from 'react-router-dom';
 
 const features = [
   {
-    icon: <AnimatedIcon />,
+    icon: <AnimatedIcon iconType="columns" />,
     title: 'CSV Reducer',
     description:
       'Optimize your CSV files by removing and rearranging columns, plus limit the number of rows.',
@@ -14,7 +14,7 @@ const features = [
     price: 'Free'
   },
   {
-    icon: <></>,
+    icon: <AnimatedIcon iconType="doc" />,
     title: 'AI Contact Names',
     description:
       'Normalize and standardize contact names using advanced AI algorithms.',
@@ -22,7 +22,7 @@ const features = [
     price: '½ cent per row'
   },
   {
-    icon: <></>,
+    icon: <AnimatedIcon iconType="arrows" />,
     title: 'AI Smart Merge',
     description:
       'Intelligently merge CSV files with automatic duplicate detection.',

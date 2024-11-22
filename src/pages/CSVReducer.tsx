@@ -1,5 +1,5 @@
 import { CSVProcessor } from '@/components/csv/CSVProcessor';
-import { AnimatedIcon } from '@/components/ui/animated-icon';
+import { AnimatedIcon } from '@/components/animated-icons/AnimatedIcon';
 
 export function CSVReducer() {
   return (
@@ -7,7 +7,7 @@ export function CSVReducer() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">CSV Reducer</h1>
         <div className="flex justify-center mt-4 mb-8">
-            <AnimatedIcon />
+          <AnimatedIcon iconType="columns" />
         </div>
         <p className="text-xl text-gray-600 font-light">
           Optimize your CSV files by removing and rearranging columns, plus limit the number of rows

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
 
 const plans = [
   {
@@ -60,7 +62,7 @@ export function Pricing() {
           >
             {plan.name === 'Pay as You Go' && (
               <div className="absolute top-0 right-6 transform -translate-y-1/2">
-                <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-primary-bright to-primary-dark text-white">
+                <span className="inline-flex items-center px-4 py-1 rounded-full text-sm font-semibold bg-primary-bright text-white">
                   Most Popular
                 </span>
               </div>
@@ -86,17 +88,18 @@ export function Pricing() {
                 </li>
               ))}
             </ul>
-
-            <Button
-              className={`w-full ${
+            <Link to={plan.name === "No account necessary" ? "/csv-reducer" : "/contact-names"}>
+              <Button
+                className={`w-full bg-white hover:bg-white hover:text-gray-900 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg ${
                 plan.name === 'Pay as You Go'
-                  ? 'bg-primary-bright text-primary-dark hover:bg-primary-bright/70'
-                  : ''
-              }`}
-              variant={plan.name === 'Pay as You Go' ? 'default' : 'outline'}
-            >
-              {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
-            </Button>
+                    ? 'bg-primary-bright text-primary-dark hover:bg-primary-bright/90'
+                    : ''
+                }`}
+                variant={plan.name === 'Pay as You Go' ? 'default' : 'outline'}
+              >   
+                  {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'} 
+              </Button>
+            </Link>
           </motion.div>
         ))}
       </div>
