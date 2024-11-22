@@ -92,7 +92,7 @@ export function Home() {
               <h2 className="mb-4 text-[1.66rem] text-bold">From One Business Owner to Another: Let’s Make More Money</h2>
 
               <p className="text-gray-600 mb-6 leading-relaxed max-w-2xl">
-                I'm sure in the 90s, email was amazing. WOAH ELECTRONIC MAIL! In {new Date().getFullYear()}, we tolerate it — but any business owner knows it is the <span className="font-semibold">veins through which revenue flows</span>.
+                I'm sure email was amazing in the 90s. WOAH ELECTRONIC MAIL! In {new Date().getFullYear()}, we tolerate it — but any business owner knows it is the <span className="font-semibold">veins through which revenue flows</span>.
                 <br />
                 <br />
                 Whether it's your own email list or cold email outreach for growth, the <span className="font-semibold">data is messy</span>. This hurts deliverability, meaning you are reaching fewer people, and leaving money on the table.

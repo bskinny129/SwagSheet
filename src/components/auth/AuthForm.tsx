@@ -22,12 +22,13 @@ export function AuthForm() {
                 colors: {
                   brand: '#0AEF8D',
                   brandAccent: '#0AEF8D',
+                  brandButtonText: '#004751'
                 },
               },
             },
             className: {
               container: 'w-full',
-              button: 'text-sm rounded-md transition-all bg-primary-bright text-primary-dark hover:bg-primary-bright/90 duration-300 transform hover:scale-105 shadow-md hover:shadow-lg',
+              button: 'text-sm rounded-md transition-all bg-primary-bright hover:bg-primary-bright/90 duration-300 transform hover:scale-105 shadow-md hover:shadow-lg',
               input: 'bg-background/50 backdrop-blur-sm border-muted',
             },
           }}
