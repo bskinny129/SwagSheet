@@ -20,14 +20,14 @@ export function AuthForm() {
             variables: {
               default: {
                 colors: {
-                  brand: '#9333ea',
-                  brandAccent: '#db2777',
+                  brand: '#004751',
+                  brandAccent: '#0AEF8D',
                 },
               },
             },
             className: {
               container: 'w-full',
-              button: 'w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white',
+              button: 'text-sm rounded-md transition-all bg-primary-bright text-primary-dark hover:bg-primary-bright/90 duration-300 transform hover:scale-105 shadow-md hover:shadow-lg',
               input: 'bg-background/50 backdrop-blur-sm border-muted',
             },
           }}
