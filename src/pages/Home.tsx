@@ -36,7 +36,7 @@ export function Home() {
     <div className="relative z-0">
       {/* Hero Section */}
       <div className="relative z-10">
-        <div className="md:mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="md:mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
           <div className="text-center">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
