@@ -36,7 +36,7 @@ export function Home() {
     <div className="relative z-0">
       {/* Hero Section */}
       <div className="relative z-10">
-        <div className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="md:mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,7 @@ export function Home() {
                 I'm sure in the 90s, email was amazing. WOAH ELECTRONIC MAIL! In {new Date().getFullYear()}, we tolerate it — but any business owner knows it is the <span className="font-semibold">veins through which revenue flows</span>.
                 <br />
                 <br />
-                Whether it's your own email list or cold email outreach for growth, the <span className="font-semibold">data is messy</span>. It hurts deliverability, meaning you are reaching fewer people, and leaving money on the table.
+                Whether it's your own email list or cold email outreach for growth, the <span className="font-semibold">data is messy</span>. This hurts deliverability, meaning you are reaching fewer people, and leaving money on the table.
                 <br />
                 <br />
                 I created tools to fix the problem for my business. Now, it's my gift to you — <span className="font-semibold">for free</span> (or advanced AI features a low pay-per-use).
@@ -105,7 +105,7 @@ export function Home() {
               <div className="relative w-48 h-64 mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-300 to-primary-bright-purple rounded-xl transform rotate-6"></div>
                 <img
-                  src="/src/assets/Brian Skinner headshot large thin 3.jpeg"
+                  src="/assets/Brian Skinner headshot large thin 3.jpeg"
                   alt="Founder Brian Skinner"
                   height={300}
                   className="rounded-xl relative z-10 object-cover"

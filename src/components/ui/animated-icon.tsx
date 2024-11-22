@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Player } from '@lordicon/react';
 
-import ICON from '../../assets/icons/wired-document.json';
+import ICON from '../animated-icons/wired-document.json';
 
 export function AnimatedIcon() {    
   const playerRef = useRef<Player>(null);

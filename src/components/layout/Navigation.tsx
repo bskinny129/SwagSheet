@@ -87,7 +87,7 @@ export function Navigation({ session }: { session: Session | null }) {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img src="/src/assets/SwagSheet200.jpg" alt="SwagSheet Logo" className="h-12 w-auto" />
+              <img src="/assets/SwagSheet200.jpg" alt="SwagSheet Logo" className="h-12 w-auto" />
             </Link>
           </div>
 
