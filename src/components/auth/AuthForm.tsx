@@ -20,7 +20,7 @@ export function AuthForm() {
             variables: {
               default: {
                 colors: {
-                  brand: '#004751',
+                  brand: '#0AEF8D',
                   brandAccent: '#0AEF8D',
                 },
               },

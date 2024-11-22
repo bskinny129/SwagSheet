@@ -5,7 +5,7 @@ import DocIcon from './lordicons/wired-document.json';
 import ArrowsIcon from './lordicons/arrows.json';
 import ColumnsIcon from './lordicons/columns.json';
 
-export function AnimatedIcon({ iconType, size = 150 }: { iconType: 'doc' | 'arrows' | 'columns' , size?: number }) {    
+export function AnimatedIcon({ iconType, size = 160 }: { iconType: 'doc' | 'arrows' | 'columns' , size?: number }) {    
     const playerRef = useRef<Player>(null);
   
     useEffect(() => {
