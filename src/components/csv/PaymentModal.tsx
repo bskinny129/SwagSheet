@@ -14,6 +14,7 @@ interface PaymentModalProps {
 }
 
 export function PaymentModal({ isOpen, onClose, rowCount, onSuccess, isLoading }: PaymentModalProps) {
+  console.log(onSuccess);
   const cost = (rowCount * 0.01).toFixed(2);
 
   const handlePayment = async () => {

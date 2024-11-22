@@ -10,10 +10,6 @@ import { ColumnManager } from './ColumnManager';
 import { PaymentModal } from './PaymentModal';
 import { CSVUpload } from './CSVUpload';
 
-interface CSVData {
-  [key: string]: string;
-}
-
 export function CSVProcessor() {
   const [rowLimit, setRowLimit] = useState(1000);
   const [rowCount, setRowCount] = useState(0);
@@ -64,7 +60,7 @@ export function CSVProcessor() {
     console.log('Starting CSV processing');
     Papa.parse(file, {
       //preview: 1, // Only parse the first row to get headers
-      step: (results, parser) => {
+      step: (results) => {
         if (rowCount === 0) {
           // Extract headers from the first row
           headers = Object.keys(results.data as object);
@@ -120,7 +116,7 @@ export function CSVProcessor() {
             parser.abort(); // Stop parsing if rowLimit is reached
             return;
           }
-          const row = results.data;
+          const row = results.data as Record<string, any>;
           const filteredRow = orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {});
           csvRows.push(Papa.unparse([filteredRow], { header: false }));
           currentRowCount++;
@@ -199,7 +195,7 @@ export function CSVProcessor() {
             parser.abort(); // Stop parsing if rowLimit is reached
             return;
           }
-          const row = results.data;
+          const row = results.data as Record<string, any>;
           const filteredRow = orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {});
           csvRows.push(Papa.unparse([filteredRow], { header: false }));
           currentRowCount++;
@@ -218,7 +214,7 @@ export function CSVProcessor() {
               body: { csvData: base64Csv }, // Ensure the body is a JSON string
               //body: { foo: 'bar' },
             });
-
+          console.log(processedData);
           if (functionError) throw functionError;
 
           // Upload original CSV

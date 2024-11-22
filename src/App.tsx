@@ -26,7 +26,6 @@ function App() {
 function AppContent() {
 
   const location = useLocation();
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [session, setSession] = useState<Session | null>({} as Session);
 
   useEffect(() => {
