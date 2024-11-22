@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Download, Loader2, Wand2 } from 'lucide-react';
+import { Download, Loader2 } from 'lucide-react';
 import Papa from 'papaparse';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
@@ -290,10 +290,12 @@ export function CSVProcessor() {
     });
   };
 
+  /*
   const handleEnhanceClick = () => {
     //setShowPaymentModal(true);
     handlePaymentSuccess();
   };
+  */
 
   const handlePaymentSuccess = () => {
     setShowPaymentModal(false);
