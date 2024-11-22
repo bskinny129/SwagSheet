@@ -375,6 +375,7 @@ export function CSVProcessor() {
         </div>
 
         <div className="flex justify-center gap-4">
+          {/*}
           <Button
             onClick={handleEnhanceClick}
             disabled={isEnhancing}
@@ -394,6 +395,7 @@ export function CSVProcessor() {
               </>
             )}
           </Button>
+            */}
 
           <Button
             onClick={exportFilteredCSV}
