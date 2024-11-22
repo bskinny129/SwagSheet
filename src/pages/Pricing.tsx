@@ -20,7 +20,7 @@ const plans = [
     features: [
       'Process up to 1,000,000 rows',
       'AI-powered intelligence for just half a cent per row',
-      'Download CSV or save to cloud',
+      'Download CSV or save to the cloud',
     ],
   },
   {

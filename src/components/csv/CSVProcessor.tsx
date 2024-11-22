@@ -403,7 +403,7 @@ export function CSVProcessor() {
             onClick={exportFilteredCSV}
             disabled={isExporting}
             size="lg"
-            className="space-x-2 bg-[#818FB4] hover:bg-[#818FB4]/80 text-[#363062] disabled:opacity-50"
+            className="space-x-2 bg-primary-bright text-primary-dark hover:bg-primary-bright/90 py-3 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
           >
             {isExporting ? (
               <>

@@ -141,7 +141,7 @@ export function Navigation({ session }: { session: Session | null }) {
             {session ? (
               <Button
                 variant="default"
-                className="ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70"
+                className="bg-primary-bright text-primary-dark hover:bg-primary-bright/90 py-3 px-4 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
                 asChild
               >
                 <Link to="/my-account">My Account</Link>
@@ -150,7 +150,7 @@ export function Navigation({ session }: { session: Session | null }) {
               <Dialog>
 
                 <DialogTrigger>
-                    <Button className="block ml-4 bg-primary-bright text-primary-dark hover:bg-primary-bright/70">Sign In</Button>
+                    <Button className="block bg-primary-bright text-primary-dark hover:bg-primary-bright/90 py-3 px-4 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">Sign In</Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
