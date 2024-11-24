@@ -83,8 +83,8 @@ export function Home() {
       <section className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-12">
       <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
         <div className="relative p-8 md:p-12">
-          <div className="absolute top-0 -mt-2 left-0 w-40 h-40 bg-primary-very-light-green/30 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-primary-very-light-green/30 rounded-full translate-x-1/3 translate-y-1/3"></div>
+          <div className="absolute top-0 -mt-2 left-0 w-40 h-40 bg-primary-very-light-green/35 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-primary-very-light-green/35 rounded-full translate-x-1/3 translate-y-1/3"></div>
           
           <div className="relative z-10 flex flex-col-reverse md:flex-row items-center">
             
@@ -101,8 +101,8 @@ export function Home() {
                 I created tools to fix the problem for my business. Now, it's my gift to you — <span className="font-semibold">for free</span> (or advanced AI features a low pay-per-use).
               </p>
             </div>
-            <div className="md:w-1/4 flex-shrink-0">
-              <div className="relative w-48 h-64 mx-auto">
+            <div className="px-4 md:px-0 md:w-1/4 flex-shrink-0">
+              <div className="relative w-36 h-48 md:w-48 md:h-64 mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-300 to-primary-bright-purple rounded-xl transform rotate-6"></div>
                 <img
                   src="/assets/Brian Skinner headshot large thin 3.jpeg"
