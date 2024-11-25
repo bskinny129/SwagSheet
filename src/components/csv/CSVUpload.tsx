@@ -33,6 +33,7 @@ export function CSVUpload({ onFileAccepted, isProcessing }: CSVUploadProps) {
       <div
         {...getRootProps()}
         className={`
+          flex flex-col items-center justify-center
           border-2 border-dashed rounded-xl p-8 text-center cursor-pointer
           transition-all duration-200 hover:border-primary-very-light-purple
           ${
@@ -42,7 +43,7 @@ export function CSVUpload({ onFileAccepted, isProcessing }: CSVUploadProps) {
           }
         `}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} className="hidden" />
         <Upload className="mx-auto h-12 w-12 text-[#818FB4] mb-4" />
         <p className="text-gray-600">
           {isDragActive

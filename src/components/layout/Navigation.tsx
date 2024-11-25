@@ -55,7 +55,7 @@ export function Navigation({ session }: { session: Session | null }) {
   const location = useLocation();
 
   const isActivePath = (path: string) => {
-    return location.pathname === path || (path === '/csv-reducer' && location.pathname === '/');
+    return location.pathname === path;
   };
 
   return (

@@ -38,7 +38,7 @@ export function SortableColumn({
       className="group hover:bg-primary-very-light-purple/20 border-primary-bright-purple/20 text-lg"
       {...attributes}
     >
-      <TableCell className="w-24 py-4">
+      <TableCell className="w-12 sm:w-24 py-4">
        <div className="flex justify-center">
           <GripHorizontal
             className="h-6 w-6 text-primary-very-dark cursor-move"
@@ -46,9 +46,9 @@ export function SortableColumn({
           />
         </div>
       </TableCell>
-      <TableCell className="text-gray-600 py-4 font-light">{column}</TableCell>
-      <TableCell className="w-40 py-4 text-center">
-        <div className="flex items-center">
+      <TableCell className="text-md sm:text-lg text-gray-600 py-4 font-light">{column}</TableCell>
+      <TableCell className="w-24 sm:w-40 py-4 text-center pl-1 sm:pl-2">
+        <div className="flex flex-col sm:flex-row items-center">
           <Checkbox
             checked={isSelected}
             onCheckedChange={onToggle}

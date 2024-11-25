@@ -70,19 +70,18 @@ export function ColumnManager({
       >
         <Table className="font-normal w-full table-fixed">
           <TableHeader>
-            <TableRow className="text-lg bg-primary-very-light-purple/30 hover:bg-primary-very-light-purple/30 border-primary-very-dark">
-              <TableHead className="w-16 py-6 font-semibold"></TableHead>
-              <TableHead className="text-gray-600 py-6 font-semibold">Column Name</TableHead>
-              <TableHead className="w-40 text-gray-600 py-6 font-semibold">
-                <div className="flex items-center">
+            <TableRow className="text-md sm:text-lg bg-primary-very-light-purple/30 hover:bg-primary-very-light-purple/30 border-primary-very-dark">
+              <TableHead className="w-10 sm:w-16 py-6 font-semibold"></TableHead>
+              <TableHead className="text-gray-600 py-6 font-semibold align-top pt-7 sm:pt-6">Column Name</TableHead>
+              <TableHead className="w-24 sm:w-40 text-gray-600 py-6 font-semibold align-top">
+                <div className="flex flex-col sm:flex-row items-center">
                   <Checkbox
                     checked={selectAll}
                     onCheckedChange={(checked) => onSelectAll(checked as boolean)}
-                    className="h-5 w-5 bg-white border-primary-bright-purple/30 data-[state=checked]:bg-primary-very-light-purple data-[state=checked]:border-primary-bright-purple/30 mr-2"
+                    className="order-2 sm:order-1 h-5 w-5 bg-white border-primary-bright-purple/30 data-[state=checked]:bg-primary-very-light-purple data-[state=checked]:border-primary-bright-purple/30 mr-1 sm:mr-2"
                   />
-                  Include
-                </div>
-                
+                  <span className="order-1 sm:order-2 mt-1 sm:mt-0">Include</span>
+                </div> 
               </TableHead>
             </TableRow>
           </TableHeader>

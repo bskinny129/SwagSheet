@@ -71,8 +71,10 @@ export function CSVProcessor() {
         //console.log(`Processed row ${rowCount}`);
       },
       complete: () => {
+        console.log("ROW COUNT");
+        console.log(rowCount);
         setRowLimit(Math.max(rowCount - 1, 1));
-        setRowCount(rowCount-1);
+        setRowCount(Math.max(rowCount - 1, 1));
         setIsProcessing(false);
         toast({
           title: 'Success!',
