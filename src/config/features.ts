@@ -17,7 +17,7 @@ export const features: Feature[] = [
   {
     title: 'CSV Reducer',
     href: '/csv-reducer',
-    description: 'Optimize your CSV files by removing and rearranging columns, plus limit the number of rows.',
+    description: 'Remove and rearrange columns, plus limit the number of rows.',
     description2: 'Why? If you are using AI on your data, the cost and accuracy depends upon how much data you give it.',
     price: 'Free',
     iconType: 'columns',

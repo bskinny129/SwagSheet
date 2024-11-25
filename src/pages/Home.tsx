@@ -44,9 +44,9 @@ export function Home() {
                 size="lg"
                 className="text-md bg-primary-bright text-primary-dark hover:bg-primary-bright/90 py-6 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
               >
-                <Link to="/csv-reducer">
+                <a href="#features">
                   Get Started for Free
-                </Link>
+                </a>
               </Button>
             </motion.div>
           </div>
@@ -94,7 +94,7 @@ export function Home() {
     </section>
 
       {/* Features Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <h2 className="mb-8 text-3xl text-bold">Free CSV Tools and AI Powered Sheets</h2>
         <div className="md:h-[403.2px] grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (

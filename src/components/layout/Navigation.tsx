@@ -35,12 +35,12 @@ const ListItem = forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/30 focus:bg-accent/30",
+            "flex w-full select-none flex-col justify-end rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/30 focus:bg-accent/30",
             className
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="text-sm font-medium leading-snug">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
