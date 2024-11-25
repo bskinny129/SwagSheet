@@ -22,31 +22,8 @@ import {
   //DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { freeFeatures as freeTools, aiFeatures as aiTools } from '@/config/features';
 
-
-const freeTools: { title: string; href: string; description: string }[] = [
-  {
-    title: "CSV Reducer",
-    href: "/csv-reducer",
-    description:
-      "Remove and rearrange columns, plus limit the number of rows.",
-  }
-];
-
-const aiTools: { title: string; href: string; description: string }[] = [
-  {
-    title: "AI Contact Names",
-    href: "/contact-names",
-    description:
-      "Standardize contact names using AI PLACEHOLDER",
-  },
-  {
-    title: "AI Smart Merge",
-    href: "/smart-merge",
-    description:
-      "Intelligently merge CSV files with automatic duplicate detection PLACEHOLDER",
-  }
-];
 
 const ListItem = forwardRef<
   React.ElementRef<"a">,

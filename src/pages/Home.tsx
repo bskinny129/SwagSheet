@@ -1,35 +1,10 @@
 import { motion } from 'framer-motion';
-//import { ArrowRight, FileSpreadsheet, Users, GitBranch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedIcon } from '@/components/animated-icons/AnimatedIcon';
 import { Link } from 'react-router-dom';
+import { features } from '@/config/features';
 
-const features = [
-  {
-    icon: <AnimatedIcon iconType="columns" />,
-    title: 'CSV Reducer',
-    description:
-      'Optimize your CSV files by removing and rearranging columns, plus limit the number of rows.',
-    link: '/csv-reducer',
-    price: 'Free'
-  },
-  {
-    icon: <AnimatedIcon iconType="doc" />,
-    title: 'AI Contact Names',
-    description:
-      'Normalize and standardize contact names using advanced AI algorithms.',
-    link: '/contact-names',
-    price: '½ cent per row'
-  },
-  {
-    icon: <AnimatedIcon iconType="arrows" />,
-    title: 'AI Smart Merge',
-    description:
-      'Intelligently merge CSV files with automatic duplicate detection.',
-    link: '/smart-merge',
-    price: '¼ cent per row'
-  },
-];
+
 
 export function Home() {
   return (
@@ -67,7 +42,7 @@ export function Home() {
               <Button
                 asChild
                 size="lg"
-                className="bg-primary-bright text-primary-dark hover:bg-primary-bright/90 py-3 px-8 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                className="text-md bg-primary-bright text-primary-dark hover:bg-primary-bright/90 py-6 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
               >
                 <Link to="/csv-reducer">
                   Get Started for Free
@@ -130,10 +105,10 @@ export function Home() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group"
             >
-              <Link to={feature.link} className="block h-full">
+              <Link to={feature.href} className="block h-full">
                 <div className="flex flex-col relative p-6 rounded-2xl shadow-md border border-primary-bright/30 h-full transform group-hover:scale-105 group-hover:border-2 transition-transform duration-300">
                   <div className="flex justify-center mt-4 mb-8">
-                    { feature.icon }
+                    <AnimatedIcon iconType={feature.iconType} />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     {feature.title}

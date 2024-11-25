@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { features } from '@/config/features';
 
 export function Footer() {
   return (
@@ -19,30 +20,16 @@ export function Footer() {
               Tools
             </h4>
             <ul className="mt-4 space-y-2">
-              <li>
+            {features.map((feature, index) => (  
+              <li key={index}>
                 <Link
-                  to="/csv-reducer"
+                  to={feature.href}
                   className="text-gray-500 hover:text-primary-bright"
                 >
-                  CSV Reducer
+                  {feature.title}
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/contact-names"
-                  className="text-gray-500 hover:text-primary-bright"
-                >
-                  AI Contact Names
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/smart-merge"
-                  className="text-gray-500 hover:text-primary-bright"
-                >
-                  AI Smart Merge
-                </Link>
-              </li>
+            ))}
             </ul>
           </div>
 
