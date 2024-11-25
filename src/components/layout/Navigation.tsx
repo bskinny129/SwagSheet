@@ -148,7 +148,7 @@ export function Navigation({ session }: { session: Session | null }) {
               </Button>
             ) : (
               <Dialog>
-                <DialogTrigger>
+                <DialogTrigger asChild>
                     <Button className="block bg-primary-bright text-primary-dark hover:bg-primary-bright/90 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">Sign In</Button>
                 </DialogTrigger>
                 <DialogContent>

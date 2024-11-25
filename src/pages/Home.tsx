@@ -92,13 +92,13 @@ export function Home() {
               <h2 className="mb-4 text-[1.66rem] text-bold">From One Business Owner to Another: Let’s Make More Money</h2>
 
               <p className="text-gray-600 mb-6 leading-relaxed max-w-2xl">
-                I'm sure email was amazing in the 90s. WOAH ELECTRONIC MAIL! In {new Date().getFullYear()}, we tolerate it — but any business owner knows it is the <span className="font-semibold">veins through which revenue flows</span>.
+                Any business owner knows <span className="font-semibold">email is the veins through which revenue flows</span>.
                 <br />
                 <br />
                 Whether it's your own email list or cold email outreach for growth, the <span className="font-semibold">data is messy</span>. This hurts deliverability, meaning you are reaching fewer people, and leaving money on the table.
                 <br />
                 <br />
-                I created tools to fix the problem for my business. Now, it's my gift to you — <span className="font-semibold">for free</span> (or advanced AI features a low pay-per-use).
+                I created tools to fix email data for my business and it's useful for other spreadsheets as well. Now, it's my gift to you — <span className="font-semibold">for free</span> (or use advanced AI features for a low pay-per-use).
               </p>
             </div>
             <div className="px-4 md:px-0 md:w-1/4 flex-shrink-0">
