@@ -96,14 +96,14 @@ export function Home() {
       {/* Features Section */}
       <div id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <h2 className="mb-8 text-3xl text-bold">Free CSV Tools and AI Powered Sheets</h2>
-        <div className="md:h-[403.2px] grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative group"
+              className="relative group md:h-[403.2px]"
             >
               <Link to={feature.href} className="block h-full">
                 <div className="flex flex-col relative p-6 rounded-2xl shadow-md border border-primary-bright/30 h-full transform group-hover:scale-105 group-hover:border-2 transition-transform duration-300">

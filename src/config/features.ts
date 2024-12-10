@@ -8,12 +8,22 @@ export interface Feature {
   description: string;
   description2?: string;
   price: string;
-  iconType: 'columns' | 'doc' | 'arrows';
+  iconType: 'columns' | 'doc' | 'arrows' | 'rules';
   category: 'free-tools' | 'ai-tools';
   component?: React.ComponentType;
 }
 
 export const features: Feature[] = [
+  {
+    title: 'Advanced Filter',
+    href: '/advanced-filter',
+    description: 'Automatically filter rows based on complex criteria.',
+    description2: 'Why? It is a pain to go row by row to figure out what data to keep and discard.',
+    price: 'Free',
+    iconType: 'rules',
+    category: 'free-tools',
+    component: ComingSoon
+  },
   {
     title: 'CSV Reducer',
     href: '/csv-reducer',

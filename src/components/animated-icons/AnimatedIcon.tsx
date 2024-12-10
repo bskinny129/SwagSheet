@@ -2,10 +2,12 @@ import { useEffect, useRef } from 'react';
 import { Player } from '@lordicon/react';
 
 import DocIcon from './lordicons/wired-document.json';
-import ArrowsIcon from './lordicons/arrows.json';
+import ArrowsIcon from './lordicons/compare-pinch.json';
 import ColumnsIcon from './lordicons/columns.json';
+import RulesIcon from './lordicons/rules-in-reveal.json';
 
-export function AnimatedIcon({ iconType, size = 160 }: { iconType: 'doc' | 'arrows' | 'columns' , size?: number }) {    
+
+export function AnimatedIcon({ iconType, size = 160 }: { iconType: 'doc' | 'arrows' | 'columns' | 'rules', size?: number }) {    
     const playerRef = useRef<Player>(null);
   
     useEffect(() => {
@@ -15,7 +17,8 @@ export function AnimatedIcon({ iconType, size = 160 }: { iconType: 'doc' | 'arro
     const icons = {
         doc: DocIcon,
         arrows: ArrowsIcon,
-        columns: ColumnsIcon
+        columns: ColumnsIcon,
+        rules: RulesIcon
     };
     const icon = icons[iconType];
 
@@ -27,7 +30,7 @@ export function AnimatedIcon({ iconType, size = 160 }: { iconType: 'doc' | 'arro
             onComplete={() => {
                 setTimeout(() => {
                     playerRef.current?.playFromBeginning();
-                }, iconType === "arrows" ? 5500 : 1500)}
+                }, iconType === "arrows" ? 2500 : 1500)}
             }
             colors="primary:#004751,secondary:#0AEF8D"
         />
