@@ -7,7 +7,7 @@ import { Home } from '@/pages/Home';
 import { Pricing } from '@/pages/Pricing';
 import { About } from '@/pages/About';
 import { Privacy } from '@/pages/Privacy';
-import { supabase } from '@/lib/supabase';
+//import { supabase } from '@/lib/supabase';
 import { Session } from '@supabase/supabase-js';
 import { MyAccount } from '@/pages/MyAccount';
 import { ToolLayout } from '@/components/layout/ToolLayout';
@@ -25,7 +25,7 @@ function AppContent() {
 
   const location = useLocation();
   const [session, setSession] = useState<Session | null>({} as Session);
-
+/*
   useEffect(() => {
     // Auth code kept for later use
      supabase.auth.getSession().then(({ data: { session } }) => {
@@ -38,7 +38,7 @@ function AppContent() {
      });
      return () => subscription.unsubscribe();
   }, []);
-
+*/
 
   useLayoutEffect(() => {
       document.documentElement.scrollTo({ top:0, left:0, behavior: "instant" });

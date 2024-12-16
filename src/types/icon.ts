@@ -1,0 +1,1 @@
+export type IconType = 'columns' | 'doc' | 'arrows' | 'rules';

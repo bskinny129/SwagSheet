@@ -1,6 +1,7 @@
 import { CSVProcessor } from '@/components/csv/CSVProcessor';
+import { AdvancedFilter } from '@/components/csv/AdvancedFilter';
 import { ComingSoon } from '@/components/csv/ComingSoon';
-
+import { IconType } from '@/types/icon';
 
 export interface Feature {
   title: string;
@@ -8,12 +9,12 @@ export interface Feature {
   description: string;
   description2?: string;
   price: string;
-  iconType: 'columns' | 'doc' | 'arrows' | 'rules';
+  iconType: IconType;
   category: 'free-tools' | 'ai-tools';
   component?: React.ComponentType;
 }
 
-export const features: Feature[] = [
+export const freeFeatures: Feature[] = [
   {
     title: 'Advanced Filter',
     href: '/advanced-filter',
@@ -22,39 +23,22 @@ export const features: Feature[] = [
     price: 'Free',
     iconType: 'rules',
     category: 'free-tools',
-    component: ComingSoon
-  },
-  {
-    title: 'CSV Reducer',
-    href: '/csv-reducer',
-    description: 'Remove and rearrange columns, plus limit the number of rows.',
-    description2: 'Why? If you are using AI on your data, the cost and accuracy depends upon how much data you give it.',
-    price: 'Free',
-    iconType: 'columns',
-    category: 'free-tools',
-    component: CSVProcessor
-  },
-  {
-    title: 'AI Contact Names',
-    href: '/contact-names',
-    description: 'Normalize and standardize contact names using advanced AI algorithms.',
-    description2: "Why? People type in the craziest thing for their name, that doesn't mean you should use it. Or if they don't provide a name, it might be in their email address.",
-    price: '½ cent per row',
-    iconType: 'doc',
-    category: 'ai-tools',
-    component: ComingSoon
-  },
-  {
-    title: 'AI Smart Merge',
-    href: '/smart-merge',
-    description: 'Intelligently merge CSV files with automatic duplicate detection.',
-    description2: "Why? Too many separate emails lists to manage? Merge them all into one with tags.",
-    price: '¼ cent per row',
-    iconType: 'arrows',
-    category: 'ai-tools',
-    component: ComingSoon
-  },
+    component: AdvancedFilter
+  }
 ];
 
-export const freeFeatures: Feature[] = features.filter(feature => feature.category === 'free-tools');
-export const aiFeatures: Feature[] = features.filter(feature => feature.category === 'ai-tools');
+export const aiFeatures: Feature[] = [
+  {
+    title: 'CSV Processor',
+    href: '/csv-processor',
+    description: 'Process and clean your CSV data with AI.',
+    price: 'Pay per use',
+    iconType: 'columns',
+    category: 'ai-tools',
+    component: CSVProcessor
+  }
+];
+
+export const features: Feature[] = [...freeFeatures, ...aiFeatures];
+
+export default features;
