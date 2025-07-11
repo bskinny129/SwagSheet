@@ -12,6 +12,7 @@ import { CSVUpload } from './CSVUpload';
 
 export function CSVProcessor() {
   const [rowLimit, setRowLimit] = useState(1000);
+  const [startingRow, setStartingRow] = useState(1);
   const [rowCount, setRowCount] = useState(0);
   const [columns, setColumns] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
@@ -111,17 +112,27 @@ export function CSVProcessor() {
       const orderedColumns = columns.filter(col => selectedColumns.includes(col));
       const csvRows: string[] = [];
       let currentRowCount = 0;
+      let processedRows = 0;
 
       Papa.parse(file, {
         step: (results, parser) => {
-          if (currentRowCount >= rowLimit) {
-            parser.abort(); // Stop parsing if rowLimit is reached
+          currentRowCount++;
+          
+          // Skip rows until we reach the starting row
+          if (currentRowCount < startingRow) {
             return;
           }
+          
+          // Stop if we've processed the required number of rows
+          if (processedRows >= rowLimit) {
+            parser.abort();
+            return;
+          }
+          
           const row = results.data as Record<string, any>;
           const filteredRow = orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {});
           csvRows.push(Papa.unparse([filteredRow], { header: false }));
-          currentRowCount++;
+          processedRows++;
         },
         complete: () => {
           const csv = [Papa.unparse([orderedColumns]), ...csvRows].join('\n');
@@ -190,17 +201,27 @@ export function CSVProcessor() {
       const orderedColumns = columns.filter(col => selectedColumns.includes(col));
       const csvRows: string[] = [];
       let currentRowCount = 0;
+      let processedRows = 0;
 
       Papa.parse(file, {
         step: (results, parser) => {
-          if (currentRowCount >= rowLimit) {
-            parser.abort(); // Stop parsing if rowLimit is reached
+          currentRowCount++;
+          
+          // Skip rows until we reach the starting row
+          if (currentRowCount < startingRow) {
             return;
           }
+          
+          // Stop if we've processed the required number of rows
+          if (processedRows >= rowLimit) {
+            parser.abort();
+            return;
+          }
+          
           const row = results.data as Record<string, any>;
           const filteredRow = orderedColumns.reduce((acc, col) => ({ ...acc, [col]: row[col] }), {});
           csvRows.push(Papa.unparse([filteredRow], { header: false }));
-          currentRowCount++;
+          processedRows++;
         },
         complete: async () => {
           const csv = [Papa.unparse([orderedColumns]), ...csvRows].join('\n');
@@ -359,22 +380,45 @@ export function CSVProcessor() {
 
         <div>
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Settings</h2>
-          <div className="flex items-center gap-2 max-w-xs ml-0 lg:ml-24">
-            <Label htmlFor="rowLimit" className="text-lg font-light text-gray-600 whitespace-nowrap">
-              Row Limit:
-            </Label>
-            <Input
-              id="rowLimit"
-              type="number"
-              value={rowLimit}
-              onChange={(e) => {
-                const value = Number(e.target.value);
-                setRowLimit(value > rowCount ? rowCount : value);
-              }}
-              className="text-lg font-light text-gray-600 w-32"
-              min="1"
-              max={rowCount}
-            />
+          <div className="space-y-4 ml-0 lg:ml-24">
+            <div className="flex items-center gap-2 max-w-xs">
+              <Label htmlFor="startingRow" className="text-lg font-light text-gray-600 whitespace-nowrap">
+                Starting Row:
+              </Label>
+              <Input
+                id="startingRow"
+                type="number"
+                value={startingRow}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setStartingRow(Math.max(1, Math.min(value, rowCount)));
+                }}
+                className="text-lg font-light text-gray-600 w-32"
+                min="1"
+                max={rowCount}
+              />
+            </div>
+            <div className="flex items-center gap-2 max-w-xs">
+              <Label htmlFor="rowLimit" className="text-lg font-light text-gray-600 whitespace-nowrap">
+                Row Limit:
+              </Label>
+              <Input
+                id="rowLimit"
+                type="number"
+                value={rowLimit}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  const maxPossibleRows = Math.max(1, rowCount - startingRow + 1);
+                  setRowLimit(Math.min(value, maxPossibleRows));
+                }}
+                className="text-lg font-light text-gray-600 w-32"
+                min="1"
+                max={Math.max(1, rowCount - startingRow + 1)}
+              />
+            </div>
+            <div className="text-sm text-gray-500">
+              Will export rows {startingRow} to {Math.min(startingRow + rowLimit - 1, rowCount)}
+            </div>
           </div>
         </div>
 
@@ -426,7 +470,7 @@ export function CSVProcessor() {
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
-        rowCount={rowLimit}
+        rowCount={Math.min(rowLimit, Math.max(0, rowCount - startingRow + 1))}
         onSuccess={handlePaymentSuccess}
         isLoading={isEnhancing}
       />
