@@ -417,7 +417,7 @@ export function CSVProcessor() {
               />
             </div>
             <div className="text-sm text-gray-500">
-              Will export rows {startingRow} to {Math.min(startingRow + rowLimit - 1, rowCount)}
+              Will export {startingRow !== 1 ? 'header and ' : ''}rows {startingRow} to {Math.min(startingRow + rowLimit - 1, rowCount)}
             </div>
           </div>
         </div>

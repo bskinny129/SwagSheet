@@ -1,5 +1,6 @@
 import { CSVProcessor } from '@/components/csv/CSVProcessor';
 import { ComingSoon } from '@/components/csv/ComingSoon';
+import { AdvancedFilter } from '@/components/csv/AdvancedFilter';
 
 
 export interface Feature {
@@ -22,7 +23,7 @@ export const features: Feature[] = [
     price: 'Free',
     iconType: 'rules',
     category: 'free-tools',
-    component: ComingSoon
+    component: AdvancedFilter
   },
   {
     title: 'CSV Reducer',
