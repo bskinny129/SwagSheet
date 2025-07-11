@@ -1,5 +1,4 @@
 import Papa from 'papaparse';
-import { CSVData } from '../types';
 
 export const exportCSV = async (
   file: File,

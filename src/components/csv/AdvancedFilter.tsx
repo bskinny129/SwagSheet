@@ -15,7 +15,7 @@ function generateId() {
 }
 
 // Helper functions for CSV export
-const exportCSV = async (file: File, columns: string[], data: Record<string, string>[]): Promise<Blob> => {
+const exportCSV = async (_file: File, columns: string[], data: Record<string, string>[]): Promise<Blob> => {
   const orderedColumns = columns;
   const csv = Papa.unparse([orderedColumns, ...data.map(row => 
     orderedColumns.map(col => row[col] || '')
